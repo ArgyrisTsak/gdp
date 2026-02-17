@@ -14,9 +14,18 @@ services:
       - --overprovisioned
       - --node-id
       - "0"
+      - --check=false
       - --kafka-addr
       - PLAINTEXT://0.0.0.0:9092
       - --advertise-kafka-addr
-      - PLAINTEXT://localhost:9092
+      - PLAINTEXT://redpanda:9092
     ports:
       - "9092:9092"
+      - "9644:9644"
+  twitch-producer:
+    build: ./services/twitch_producer
+    container_name: twitch-producer
+    depends_on:
+      - redpanda
+    environment:
+      - KAFKA_BROKER=redpanda:9092
