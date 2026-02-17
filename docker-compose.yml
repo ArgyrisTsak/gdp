@@ -29,3 +29,12 @@ services:
       - redpanda
     environment:
       - KAFKA_BROKER=redpanda:9092
+  twitch-consumer:
+    build: ./services/twitch_consumer
+    container_name: twitch-consumer
+    depends_on:
+      - redpanda
+    environment:
+      - KAFKA_BROKER=redpanda:9092
+    volumes:
+      - ./data:/data
